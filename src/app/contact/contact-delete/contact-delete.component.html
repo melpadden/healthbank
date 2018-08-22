@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{'contactDetailPage.deleteModal.title' | translate}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  {{'contactDetailPage.deleteModal.message' | translate}}
+  <p class="font-weight-bold">{{contact.contactInfo.firstname}} {{contact.contactInfo.lastname}}
+    ({{contact.contactInfo.email}})</p>
+
+  <div class="row mt-1" *ngIf="contact?.shared?.itemsSharedWithContact">
+        <span  class="col-12 text-muted">
+            <svg class="ma-icon-visibility" aria-hidden="true" height="20px">
+            <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-visibility"></use>
+          </svg>
+            {{ contact.shared.itemsSharedWithContact | plural : 'contactDeleteModal.deleteModal.access.label' | translate:{items: contact.shared.itemsSharedWithContact} }}
+          </span>
+  </div>
+
+  <div class="row mt-1" *ngIf="contact?.shared?.itemsSharedWithMe">
+        <span  class="col-12 text-muted">
+            <svg class="ma-icon-share" aria-hidden="true" height="20px">
+            <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-share"></use>
+          </svg>
+            {{ contact.shared.itemsSharedWithMe | plural : 'contactDeleteModal.deleteModal.shared.label' | translate:{items: contact.shared.itemsSharedWithMe} }}
+          </span>
+  </div>
+
+  <div class="row mt-3" *ngIf="contact?.shared?.itemsSharedWithMe || contact?.shared?.itemsSharedWithContact">
+    <span class="col-sm-12">
+    {{'contactDetailPage.deleteModal.permissions.revoked.info' | translate}}
+      </span>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary mr-auto" (click)="onConfirm()">{{'contactDetailPage.deleteModal.confirmLabel' |
+    translate}}
+  </button>
+  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">
+    {{'contactDetailPage.deleteModal.cancelLabel' | translate }}
+  </button>
+</div>

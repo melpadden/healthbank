@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="/timeline">
+    <img src="{{assets}}/images/healthbank-logo.png" style="height: 2.1rem">
+    healthbank
+  </a>
+
+  <button class="navbar-toggler" type="button"
+          (click)="navCollapsed = !navCollapsed"
+          [attr.aria-expanded]="!navCollapsed"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse justify-content-stretch" id="nav-collapse" [ngbCollapse]="navCollapsed">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ml-3 ml-lg-0">
+        <a class="nav-link align-bottom" [ngClass]="{'active': router.routerState.snapshot.url.startsWith('/timeline')}" routerLink="/timeline">
+          <div class="align-bottom">
+            {{ 'navigation.timeline' | translate }}
+          </div>
+        </a>
+      </li>
+      <li class="nav-item ml-3 ml-lg-0">
+        <a class="nav-link align-bottom" [ngClass]="{'active': router.routerState.snapshot.url.startsWith('/contacts')}" routerLink="/contacts">
+          <div class="align-bottom">
+            {{ 'navigation.contacts' | translate }}
+          </div>
+        </a>
+      </li>
+      <li class="nav-item ml-3 ml-lg-0">
+      <a class="nav-link align-bottom" [ngClass]="{'active': router.routerState.snapshot.url.startsWith('/mediplan')}" routerLink="/mediplan">
+        <div class="align-bottom">
+          {{ 'navigation.mediplan' | translate }}
+        </div>
+      </a>
+    </li>
+    </ul>
+  </div>
+  <div class="collapse navbar-collapse" [ngbCollapse]="navCollapsed">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown ml-3 ml-lg-0">
+        <div ngbDropdown class="d-inline-block text-lg-right" placement="bottom-right">
+          <a class="nav-link dropdown-toggle username" [ngClass]="{'active': router.routerState.snapshot.url.startsWith('/user')}"
+             role="button" id="navbarDropdownMenuLink" data-toggle="dropdown"
+             aria-haspopup="true"
+             aria-expanded="false" ngbDropdownToggle>
+            {{ getUserName() }}
+          </a>
+          <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" (click)="toProfile()">{{ 'user.profile.action' | translate }}</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item ml-3 ml-lg-0">
+        <a class="nav-link align-bottom" id="logout" (click)="logout()">
+          <span>
+          <svg class="ma-icon-visibility" aria-hidden="true">
+            <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-exit_to_app"></use>
+          </svg>
+            <span class="sr-only">{{ 'navigation.logout' | translate }}</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

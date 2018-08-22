@@ -1,0 +1,59 @@
+<div class="modal-body">
+  <div class="flash-img">
+    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+  </div>
+
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+  <h2 class="modal-title">Ein Systemfehler ist aufgetreten.</h2>
+  <div *ngIf="getHumanMessage()" class="row">
+    <p class="col-md-10 lead">{{getHumanMessage()}}</p>
+  </div>
+
+  <p *ngIf="data.uuid" class="lead">Support Code: <strong>{{data.uuid}}</strong></p>
+
+  <em (click)="unfolded = true">
+    Technische Details
+    <svg *ngIf="!unfolded" class="ma-icon-arrow_drop_down" aria-hidden="true">
+      <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-arrow_drop_down"></use>
+    </svg>
+  </em>
+  <div *ngIf="unfolded" class="content details">
+    <!-- Space after label is needed, so you can select the value by double clicking without selection of label -->
+    <div class="row">
+      <div class="col-sm-2">Version </div>
+      <div class="col-sm-10">{{getVersion()}}</div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Request </div>
+      <div class="col-sm-10">{{getHttpMethod()}} {{getHttpUrl()}}</div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">HTTP Code </div>
+      <div class="col-sm-10">{{rejection.status}}</div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">Zeitstempel </div>
+      <div class="col-sm-10">{{getTimestamp()}}</div>
+    </div>
+    <div class="row" *ngIf="data.error">
+      <div class="col-sm-2">Fehler </div>
+      <div class="col-sm-10">
+        <p><strong>{{data.error}}</strong></p>
+        <div *ngFor="let err of data.details">{{err}}</div>
+      </div>
+    </div>
+
+    <div *ngIf="isDebug()">
+      Request
+      <pre id="request" class="soft-wrap rounded bg-faded p-1">{{getRequestBody()}}</pre>
+    </div>
+
+    <div *ngIf="getStackOrBody()">
+      Stacktrace / Body
+      <pre id="stacktrace" class="soft-wrap rounded bg-faded p-1">{{getStackOrBody()}}</pre>
+    </div>
+  </div>
+</div>

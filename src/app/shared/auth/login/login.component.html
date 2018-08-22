@@ -1,0 +1,39 @@
+<div class="centered-box">
+  <div class="card">
+    <form id="login-comp" [formGroup]="loginForm" class="mt-4" novalidate (ngSubmit)="doLogin()">
+
+      <div class="form-group d-inline-block">
+        <div class="col-12">
+          <svg class="align-middle d-inline-block ma-icon-account_circle profile-icon" aria-hidden="true">
+            <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-account_circle"></use>
+          </svg>
+          <span class="d-inline-block align-middle title"><h1>{{sessionUser?.user.firstName}} {{sessionUser?.user.lastName}}</h1></span>
+        </div>
+      </div>
+
+      <div class="form-group row text-left ml-0 mr-0">
+        <label class="col-lg-3 col-form-label">
+          {{'login.password.label' | translate}}
+        </label>
+        <div class="col-12">
+          <input formControlName="password" name="password"
+                 id="input-password" type="password" class="form-control">
+          <ngx-form-error [control]="loginForm.get('password')"></ngx-form-error>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="mt-3 row m-0">
+    <div class="form-group col-sm-6">
+      <button id="submit" class="btn btn-primary" type="submit" (click)="doLogin()" [disabled]="disableForm">
+        {{'login.login.button' | translate}}
+      </button>
+    </div>
+    <div class="form-group col-sm-6">
+      <button id="cancel" class="btn btn-outline-secondary" (click)="cancel()" [disabled]="disableForm">
+        {{'login.cancel.button' | translate}}
+      </button>
+    </div>
+  </div>
+</div>

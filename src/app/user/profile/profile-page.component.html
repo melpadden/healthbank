@@ -1,0 +1,94 @@
+<div class="row">
+
+  <div class="col-sm-auto col-md-1 mt-md-3">
+    <div class="profile-icon">
+      {{user.firstName?.slice(0,1).toUpperCase()}}{{user.lastName?.slice(0,1).toUpperCase()}}
+    </div>
+  </div>
+
+  <div class="col-sm-12 col-md-11">
+
+    <div class="row form-group mt-sm-1 mt-md-3">
+      <h2 id="qa-user-name-header" class="clearfix col-sm-11 col-md-10 mt-1">
+        {{ user.firstName + ' ' + user.lastName }}
+      </h2>
+
+      <div class="col-sm-1 col-md-2" *ngIf="false">
+        <div ngbDropdown class="d-inline-block float-right" placement="bottom-right">
+          <button class="btn btn-outline-primary" id="dropDownProfile" ngbDropdownToggle></button>
+          <div ngbDropdownMenu aria-labelledby="dropDownProfile">
+            <button class="dropdown-item pointer" (click)="startDeleteAccount()">
+              {{ 'user.profile.delete.account.message' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="bottom-border mt-sm-4">
+      {{ 'user.profile.label' | translate }}
+    </h4>
+
+    <div class="row form-group">
+      <strong class="col-sm-12 col-md-2">
+        {{ 'user.profile.name.label' | translate }}
+      </strong>
+      <div class="col-sm-12 col-md-8" id="qa-first-name-content">
+        {{ user.firstName }}
+      </div>
+    </div>
+    <div class="row form-group">
+      <strong class="col-sm-12 col-md-2">
+        {{ 'user.profile.surname.label' | translate }}
+      </strong>
+      <div class="col-sm-12 col-md-8" id="qa-last-name-content">
+        {{ user.lastName }}
+      </div>
+    </div>
+    <div class="row form-group">
+      <strong class="col-sm-12 col-md-2">
+        {{ 'user.profile.nationality.label' | translate }}
+      </strong>
+      <div class="col-sm-12 col-md-8" id="qa-nationality-content">
+        {{ getNationality(user.nationality) | translate }}
+      </div>
+    </div>
+
+    <h4 class="bottom-border mt-sm-4">
+      {{ 'user.profile.account.label' | translate }}
+    </h4>
+    <div class="row form-group">
+      <strong class="col-sm-12 col-md-2">
+        {{ 'user.profile.mail.label' | translate }}
+      </strong>
+      <div class="col-sm-12 col-md-8" id="qa-mail-content">
+        {{ user.email }}
+      </div>
+    </div>
+    <div class="row form-group">
+      <strong class="col-sm-12 col-md-2">
+        {{ 'user.profile.phone.label' | translate }}
+      </strong>
+      <div class="col-sm-12 col-md-8" id="qa-phone-content">
+        {{ user.phone }}
+      </div>
+    </div>
+    <div class="row form-group">
+      <strong class="col-sm-12 col-md-2">
+        {{ 'user.profile.enrolled.label' | translate }}
+      </strong>
+      <div class="col-sm-12 col-md-8">
+        {{ user.enrolled | dateFormat }}
+      </div>
+    </div>
+    <div class="row form-group" *ngIf="user.storage">
+      <strong class="col-sm-12 col-md-2">
+        {{ 'user.profile.storage.label' | translate }}
+      </strong>
+      <div class="col-sm-12 col-md-8">
+        {{ user.storage }}
+      </div>
+    </div>
+  </div>
+</div>
+

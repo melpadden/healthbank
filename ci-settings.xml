@@ -1,0 +1,69 @@
+<settings>
+    <mirrors>
+        <!-- mirror a9y.risedev.at over releases.rise-world.com -->
+        <mirror>
+            <id>rise-mirror</id>
+            <mirrorOf>rise</mirrorOf>
+            <url>https://releases.rise-world.com/healthbank/</url>
+        </mirror>
+    </mirrors>
+
+    <servers>
+        <server>
+            <id>rise-mirror</id>
+            <username>healthbank</username>
+            <!-- build definition variable -->
+            <password>${repo.password}</password>
+        </server>
+
+        <!-- cred. for healthbank package feed -->
+        <server>
+            <id>healthbank-visualstudio.com-healthbank</id>
+            <configuration>
+                <httpHeaders>
+                    <property>
+                        <name>Authorization</name>
+                        <!-- Treat this auth token like a password. Do not share it with anyone, including Microsoft support. -->
+                        <!-- The generated token expires on or before 2018.08.18 -->
+                        <!-- build definition variable -->
+                        <value>${feed.password}</value>
+                    </property>
+                </httpHeaders>
+            </configuration>
+        </server>
+    </servers>
+
+    <activeProfiles>
+        <activeProfile>healthbank</activeProfile>
+    </activeProfiles>
+    <profiles>
+        <profile>
+            <id>healthbank</id>
+            <repositories>
+                <repository>
+                    <id>healthbank-visualstudio.com-healthbank</id>
+                    <url>https://healthbank.pkgs.visualstudio.com/_packaging/healthbank/maven/v1</url>
+                    <releases>
+                        <updatePolicy>never</updatePolicy>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>healthbank-visualstudio.com-healthbank</id>
+                    <url>https://healthbank.pkgs.visualstudio.com/_packaging/healthbank/maven/v1</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+</settings>

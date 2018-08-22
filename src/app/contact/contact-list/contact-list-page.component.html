@@ -1,0 +1,80 @@
+<h1 class="clearfix">{{ 'contactListPage.title' | translate }}
+  <span class="float-right">
+       <button id="new-timeline-entry" (click)="addContact()"
+               class="btn btn-primary">{{ 'contactListPage.addContact.button.title' | translate }}</button>
+      </span>
+</h1>
+
+<div *ngIf="(loadedPendingInvitations$ | async).length > 0">
+  <h4>{{'contactListPage.pending.invitation.list.header' | translate}}</h4>
+  <app-list-chrome #pendingList
+                   [list]="loadedPendingInvitations$ | async"
+                   (loadMore)="loadMore($event)"
+                   [loadMoreToken]="showMore()"
+                   [sortDir]="'desc'"
+                   [searchCollapsed]="searchCollapsed">
+
+    <ul class="timeline-list">
+      <li *ngFor="let item of pendingList.slicedList" class="timeline-list-item pending-list-item">
+        <div class="d-flex align-items-center contact-list-item-title-wrapper mb-md-0">
+          <div class="profile-icon">
+            ?
+          </div>
+          <span class="contact-list-item-text"><strong>{{'contactListPage.pending.invitation.label.code' | translate}}</strong>{{item.token}}</span>
+        </div>
+        <div class="pending-list-item-valid align-items-center justify-content-md-end d-flex">
+        <span class="contact-list-item-text">
+          <strong>{{'contactListPage.pending.invitation.label.valid' | translate}}</strong>
+        {{item.validUntil | dateTimeFormat}}
+         </span>
+        </div>
+      </li>
+    </ul>
+  </app-list-chrome>
+</div>
+
+<app-list-chrome #list
+                 [list]="loadedItems$ | async"
+                 (loadMore)="loadMore($event)"
+                 [loadMoreToken]="showMore()"
+                 [sort]="[{label: 'Name', attr: 'name'}]"
+                 [sortDir]="'asc'"
+                 [searchCollapsed]="searchCollapsed">
+
+  <ul class="timeline-list">
+    <li *ngFor="let item of list.slicedList" class="timeline-list-item pointer" (click)="itemClicked(item)"
+        role="button"
+        style="position: relative;">
+      <div class="d-flex align-items-center contact-list-item-title-wrapper mb-md-0">
+        <div class="profile-icon">
+          {{item.contactInfo.firstname?.slice(0,1).toUpperCase()}}{{item.contactInfo.lastname?.slice(0,1).toUpperCase()}}
+        </div>
+        <span class="contact-list-item-text">{{item.contactInfo.firstname}} {{item.contactInfo.lastname}}</span>
+      </div>
+      <div class="contact-list-item-email align-items-center d-flex">
+        <a class="contact-list-item-text" href="mailto:{{item.contactInfo.email}}" (click)="$event.stopPropagation();">
+          {{item.contactInfo.email}}
+        </a>
+      </div>
+      <div class="contact-list-item-shared align-items-center d-flex">
+        <div class="contact-list-item-shared-item row mt-1">
+        <span *ngIf="item.shared?.itemsSharedWithContact" class="col-12">
+            <svg class="ma-icon-visibility" aria-hidden="true" height="20px">
+            <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-visibility"></use>
+          </svg>
+            <a (click)="$event.preventDefault(); itemClicked(item, 'hasAccessTab-id')">{{ item.shared.itemsSharedWithContact | plural : 'contactListPage.access.label' | translate:{items: item.shared.itemsSharedWithContact} }}</a>
+          </span>
+        </div>
+
+        <div class="contact-list-item-shared-item row mt-1">
+        <span *ngIf="item.shared?.itemsSharedWithMe" class="col-12">
+            <svg class="ma-icon-share" aria-hidden="true" height="20px">
+            <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-share"></use>
+          </svg>
+            <a (click)="$event.preventDefault(); itemClicked(item, 'sharedWithMeTab-id')">{{ item.shared.itemsSharedWithMe | plural : 'contactListPage.shared.label' | translate:{items: item.shared.itemsSharedWithMe} }}</a>
+          </span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</app-list-chrome>

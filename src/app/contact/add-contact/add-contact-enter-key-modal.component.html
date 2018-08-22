@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{'add-contact-create-key-modal.title' | translate}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" [disabled]="disable">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <p>{{'add-contact-enter-key-modal.body.p1' | translate}}</p>
+
+  <form [formGroup]="addContactForm" novalidate>
+  <div class="form-group row">
+    <label class="col-4 col-form-label">
+      {{ 'add-contact-enter-key-modal.body.form.contact.key.label' | translate }} *
+    </label>
+    <div class="col-lg-7 col-md-10">
+      <input id="title" formControlName="key" class="form-control" type="text" maxlength="128">
+      <ngx-form-error [control]="addContactForm.get('key')"></ngx-form-error>
+    </div>
+  </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary mr-auto" (click)="onConfirm()" [disabled]="disable">
+    {{'add-contact-enter-key-modal.confirmLabel' | translate}}
+  </button>
+  <button type="button" class="btn btn-outline-secondary ml-auto" (click)="activeModal.dismiss('add-contact-choose')" [disabled]="disable">
+    {{'add-contact-enter-key-modal.backLabel' | translate}}</button>
+</div>

@@ -1,0 +1,101 @@
+<form [formGroup]="createItemForm" novalidate id="create-item-form">
+  <div id="timeline-create-item-form">
+    <br>
+    <div class="form-group row">
+      <label class="col-11 col-form-label">
+        <h3>
+          {{ 'createItemPage.title' | translate }}
+        </h3>
+      </label>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2 col-sm-12 col-form-label">
+        {{ 'createItemPage.form.title.label' | translate }} *
+      </label>
+      <div class="col-lg-7 col-md-10">
+        <input id="title" formControlName="title" class="form-control" type="text" maxlength="128">
+        <ngx-form-error [control]="createItemForm.get('title')"></ngx-form-error>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2 col-sm-12 col-form-label">
+        {{ 'createItemPage.form.files.label' | translate }} *
+      </label>
+      <div class="center col-lg-7 col-md-10">
+        <app-drop-file
+                id="files"
+                [reset]="resetDrop"
+                [disable]="disable"
+                (filesUpload)="getFiles($event)">
+        </app-drop-file>
+        <ngx-form-error [control]="createItemForm.get('files')"></ngx-form-error>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-2 col-sm-12 col-form-label">
+        {{ 'createItemPage.form.date.label' | translate }} *
+      </label>
+      <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+        <app-date-picker id="creation-date" formControlName="creationDate"></app-date-picker>
+        <ngx-form-error [control]="createItemForm.get('creationDate')"></ngx-form-error>
+      </div>
+      <div class="form-group col-sm-6 col-md-4 col-lg-3">
+        <div class="input-group">
+          <input id="creation-time is-invalid " class="form-control" type="text" formControlName="creationTime"
+                 maxlength="5"
+                 appTimeFormat required
+                 placeholder="{{ 'hh:mm' }}"/>
+          <div class="input-group-append">
+            <button class="btn btn-outline-light" (click)="now()"> {{ 'Now' }}</button>
+          </div>
+        </div>
+        <ngx-form-error [control]="createItemForm.get('creationTime')"></ngx-form-error>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">
+        {{ 'createItemPage.form.tags.label' | translate }}
+      </label>
+      <div class="col-lg-7 col-md-10">
+        <tag-input id="tags" formControlName="tags" #tagInput
+                   [placeholder]="tagInputTranslations['placeholder']"
+                   [secondaryPlaceholder]="tagInputTranslations['secondaryPlaceholder']"
+                   [maxItems]="8"
+                   [modelAsStrings]="true"
+                   [addOnBlur]="true"
+                   [addOnPaste]="true"
+                   [pasteSplitPattern]="' '"
+                   [separatorKeyCodes]="[32]"
+                   [validators]="tagValidators"
+                   [errorMessages]="tagErrorMessages"
+                   [onAdding]="onAdding"
+                   [theme]="'healthbank-theme'"
+                   (onTextChange)="handleSpace($event, tagInput)">
+        </tag-input>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">
+      </label>
+      <div class="col-lg-7 col-md-10">
+        <button class="btn btn-primary" type="button" (click)="createItem()" [disabled]="disable">
+          {{ 'createItemPage.form.submit.label' | translate }}
+        </button>
+        <button class="btn btn-outline-secondary float-right" type="button" (click)="reset()" [disabled]="disable">
+          {{ 'createItemPage.form.cancel.label' | translate }}
+        </button>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label"></label>
+      <div class="col-lg-7 col-md-10">
+        <label>
+          <svg class="ma-icon-mode_edit" aria-hidden="true">
+            <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-info"></use>
+          </svg>
+          {{ 'createItemPage.encryptionNote' | translate }}
+        </label>
+      </div>
+    </div>
+  </div>
+</form>

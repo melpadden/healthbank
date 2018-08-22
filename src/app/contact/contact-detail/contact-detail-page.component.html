@@ -1,0 +1,44 @@
+<div *ngIf="contact">
+  <br>
+  <div class="row form-group">
+    <h1 class="clearfix col-sm-12 col-md-10">
+      {{ contact.contactInfo.firstname}} {{ contact.contactInfo.lastname}}
+    </h1>
+    <div  ngbDropdown class="d-inline-block float-right float-sm-left col-sm-12 col-md-2">
+      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle></button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button class="dropdown-item pointer" (click)="openDeleteConfirmDialog()">
+          {{ 'contactDetailPage.delete' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-contact-detail [contact]="contact"></app-contact-detail>
+
+  <div class="row">
+    <ngb-tabset [activeId]="activeTabId" (tabChange)="beforeTabChange($event)">
+      <ngb-tab id="hasAccessTab-id">
+        <ng-template ngbTabTitle>
+          {{'contactDetailPage.hasAccess.tab.heading' | translate}} {{contact.contactInfo.firstname}}
+          {{contact.contactInfo.lastname}} ({{sharedInformation?.itemsSharedWithContact}})
+        </ng-template>
+        <ng-template ngbTabContent>
+          <div *ngIf="contact && identity" class="mt-4">
+            <app-contact-shared-with-detail [contact]="contact"></app-contact-shared-with-detail>
+          </div>
+
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab id="sharedWithMeTab-id">
+        <ng-template ngbTabTitle> {{contact.contactInfo.firstname}} {{contact.contactInfo.lastname}}'s
+          {{'contactDetailPage.sharedWith.tab.heading' | translate}} ({{sharedInformation?.itemsSharedWithMe}})
+        </ng-template>
+        <ng-template ngbTabContent>
+          <div *ngIf="contact && identity" class="mt-4">
+            <app-contact-shared-by-detail [contact]="contact"></app-contact-shared-by-detail>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>

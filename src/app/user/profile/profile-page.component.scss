@@ -1,0 +1,20 @@
+.bottom-border {
+  padding-bottom: 8px;
+  border-bottom: 1px solid gray;
+}
+
+.grey-text {
+  color: gray;
+}
+
+@media (min-width: 768px) {
+  .float-md-left {
+    float: left !important;
+  }
+  .float-md-right {
+    float: right !important;
+  }
+  .float-md-none {
+    float: none !important;
+  }
+}

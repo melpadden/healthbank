@@ -1,0 +1,1 @@
+curl -i -X OPTIONS -H "Origin: http://127.0.0.1:4200" -H "Access-Control-Request-Method: POST" -H "Access-Control-Request-Headers: Content-Type, Authorization" "https://dev-timeline.healthbank.me/api/v1/enrollment/create"

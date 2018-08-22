@@ -1,0 +1,51 @@
+<div>
+  <div *ngIf="data.length === 0">
+    <div *ngIf="!isMobile()">
+      <file-drop
+              headertext="{{ 'dropFile.dropZoneText' | translate }}"
+              (onFileDrop)="dropped($event)">
+      </file-drop>
+      <br>
+    </div>
+    <div>
+      <label class="btn btn-secondary">
+        {{ 'dropFile.browse' | translate }}
+        <input #fileBrowse type="file" hidden (change)="selected($event)" [accept]="mimeTypeAllowed">
+      </label>
+      <label *ngIf="!isMobile()" class="btn btn-secondary" (click)="showCamera()">
+        <img class="glyphicon" src="{{assets}}/images/glyphicons-camera-2.png"/>
+        {{ 'dropFile.addPictureFromCamera' | translate }}
+      </label>
+    </div>
+  </div>
+  <div>
+    <table>
+      <tbody>
+      <tr *ngFor="let item of data; let i=index">
+        <td>
+          <div class="pb-3">
+            <app-preview-content [content]="item.thumbnail" [width]="'300px'" [height]="'200px'"></app-preview-content>
+          </div>
+          <strong>{{ item.originalFileMetadata.name }} ({{ item.originalFileMetadata.size }})</strong>
+          <button class="btn btn-danger" type="button" (click)="removeFile(item)" [disabled]="disable">
+            {{ 'dropFile.remove' | translate }}
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div *ngIf="showCameraModal" class="modal-backdrop fade" [class.show]="showCameraModal"></div>
+<div role="dialog" class="modal fade" [class.show]="showCameraModal">
+  <div role="document" class="modal-dialog">
+    <div class="modal-content">
+      <app-camera-modal
+              *ngIf="showCameraModal"
+              (close)="closeCamera()"
+              (add)="addPicture($event)"
+      ></app-camera-modal>
+    </div>
+  </div>
+</div>
+

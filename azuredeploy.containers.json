@@ -1,0 +1,139 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "serviceName": {
+      "defaultValue": "healthbank-eus1-wwww",
+      "type": "string"
+    },
+    "configurationShareAccountName": {
+      "defaultValue": "health***",
+      "type": "string"
+    },
+    "configurationShareAccountKey": {
+      "defaultValue": "DxV**",
+      "type": "string"
+    },
+    "configurationShareToUse": {
+      "defaultValue": "staging-healthbank-me",
+      "type": "string"
+    },
+    "contentShareAccountName": {
+      "defaultValue": "health***",
+      "type": "string"
+    },
+    "contentShareAccountKey": {
+      "defaultValue": "DxV**",
+      "type": "string"
+    },
+    "contentShareToUse": {
+      "defaultValue": "webapp",
+      "type": "string"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.ContainerInstance/containerGroups",
+      "name": "[parameters('serviceName')]",
+      "apiVersion": "2018-04-01",
+      "location": "[resourceGroup().location]",
+      "scale": null,
+      "tags": {
+        "Service": "WebApp"
+      },
+      "properties": {
+        "containers": [
+          {
+            "name": "nginx",
+            "properties": {
+              "image": "nginx",
+              "ports": [
+                {
+                  "protocol": "TCP",
+                  "port": 443
+                },
+                {
+                  "protocol": "TCP",
+                  "port": 80
+                }
+              ],
+              "environmentVariables": [],
+              "resources": {
+                "requests": {
+                  "memoryInGB": 1,
+                  "cpu": 1
+                }
+              },
+              "volumeMounts": [
+                {
+                  "name": "sitecontent",
+                  "mountPath": "/mnt/site"
+                },
+                {
+                  "name": "siteconfiguration",
+                  "mountPath": "/etc/nginx/conf.d"
+                },
+                {
+                  "name": "sslconfiguration",
+                  "mountPath": "/etc/letsencrypt"
+                }
+              ]
+            }
+          }
+        ],
+        "imageRegistryCredentials": [],
+        "restartPolicy": "Always",
+        "ipAddress": {
+          "ports": [
+            {
+              "protocol": "TCP",
+              "port": 443
+            },
+            {
+              "protocol": "TCP",
+              "port": 80
+            }
+          ],
+          "ip": "",
+          "type": "Public",
+          "dnsNameLabel": "[parameters('serviceName')]"
+        },
+        "osType": "Linux",
+        "volumes": [
+          {
+            "name": "sitecontent",
+            "azureFile": {
+              "shareName": "[parameters('contentShareToUse')]",
+              "storageAccountName": "[parameters('contentShareAccountName')]",
+              "storageAccountKey": "[parameters('contentShareAccountKey')]"
+            }
+          },
+          {
+            "name": "siteconfiguration",
+            "azureFile": {
+              "shareName": "[parameters('configurationShareToUse')]",
+              "storageAccountName": "[parameters('configurationShareAccountName')]",
+              "storageAccountKey": "[parameters('configurationShareAccountKey')]"
+            }
+          },
+          {
+            "name": "sslconfiguration",
+            "azureFile": {
+              "shareName": "letsencrypt",
+              "storageAccountName": "[parameters('configurationShareAccountName')]",
+              "storageAccountKey": "[parameters('configurationShareAccountKey')]"
+            }
+          }
+        ]
+      },
+      "dependsOn": []
+    }
+  ],
+  "outputs": {
+    "ServiceUrl": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups/', parameters('serviceName'))).ipAddress.fqdn]"
+    }
+  }
+}

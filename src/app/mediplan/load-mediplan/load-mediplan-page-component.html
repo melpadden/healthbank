@@ -1,0 +1,108 @@
+<form [formGroup]="createItemForm" novalidate id="create-item-form">
+  <div id="mediplan-upload-qrcode-form">
+    <br>
+    <div class="form-group row">
+      <label class="col-11 col-form-label">
+        <h3>
+          Add Data
+        </h3>
+      </label>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">
+        {{ 'Title *' }}
+      </label>
+      <div class="col-lg-7 col-md-10">
+        <input id="title" formControlName="title" class="form-control" type="text" placeholder="Test">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">{{ 'Scan QR code *' }}<br/></label>
+      <div class="center col-lg-7 col-md-10">
+        <app-qr-scanner #qrScanner id="qr-scanner"></app-qr-scanner>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="center col-lg-7 col-md-10">
+        <button class="btn  btn-primary" type="button" (click)="loadDummyQrCode()">Send Dummy Code</button>
+      </div>
+    </div>
+    <div class="row">
+      <label class="col-2 col-form-label">{{ 'Document Viewer' }}<br/></label>
+      <div class="col-md-5">
+        <div class="thumbnail" style="width: 150px;height: 200px;" (click)="showPdf()">
+          <pdf-viewer [src]="pdfSrc"
+                      [page]="page"
+                      [original-size]="false"
+                      style="display: block;"
+          ></pdf-viewer>
+        </div>
+
+        <!--
+        <app-download-data id="privateKeyId" [data]="pdfThumbnail"
+                           [type]="'application/pdf'"
+                           [linkText]="'click.to.enlarge' | translate"
+                           [filename]="filename">
+
+        </app-download-data>
+        -->
+
+        <!--        <div class="col-md-7">  -->
+          <div #overlay *ngIf="pdfShow" class="overlay" onkeydown="keyPressHandler(e)" (click)="clickOverlay()">
+            <iframe width="100%" height="100%" [src]="pageUrl" type="application/pdf" onkeydown="keyPressHandler(e)"></iframe>
+          </div>
+        <!--        </div>  -->
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">{{ pdfFileName }}</label>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">
+      {{ 'Date *' }}>
+      </label>
+      <div class="col-lg-2 col-md-2">
+        <app-date-picker id="creation-date" formControlName="creationDate"></app-date-picker>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">
+        {{ 'Code' }}
+      </label>
+      <div class="col-lg-2 col-md-2">
+        <input id="qrResultString" class="form-control" type="text" placeholder="Test" disabled value="{{qrResultString}}" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">
+        {{ 'Tags' }}
+      </label>
+      <div class="col-lg-7 col-md-10">
+        <tag-input id="tags" formControlName="tags"></tag-input>
+        <input id="location" formControlName="location" type="checkbox" />
+        <label>
+          {{ 'Include my current location' }}
+        </label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">
+      </label>
+      <div class="col-lg-7 col-md-10">
+        <button class="btn btn-primary" type="button" (click)="createItem()"
+                [disabled]="!(createItemForm.valid && getFilesLength() > 0)">
+          {{ 'Create Item' }}
+        </button>
+        <button class="btn btn-secondary" type="button" (click)="reset()">
+          {{ 'Cancel' }}
+        </button>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-xl-3">
+        {{ 'Your data will be encrypted on your device and then uploaded. This may take some time*' }}
+      </label>
+    </div>
+  <!--</div>-->
+</form>

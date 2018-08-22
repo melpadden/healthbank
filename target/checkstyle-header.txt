@@ -1,0 +1,32 @@
+Deutsch
+
+    1 (C) by Research Industrial Systems Engineering (RISE) Forschungs-, Entwicklungs- und Großprojektberatung GmbH 2016-2018 nach österreichischem Recht
+
+    2 Urheber dieser Software mit der Bezeichnung RISE-Blueprint "spring-platform" (Computerprogramm iSv § 40a österreichisches UrhG) ist die Research Industrial Systems Engineering (RISE) Forschungs-, Entwicklungs- und Großprojektberatung GmbH mit Sitz in A-2320 Schwechat.
+
+    3 Die Verwertungsrechte stehen grundsätzlich ausschließlich dem Urheber zu.
+
+    4 Eine Werknutzungsbewilligung sowohl für private oder andere nicht kommerzielle Zwecke als auch für einen professionellen, kommerziellen oder produktiven Einsatz bedarf einer gesonderten schriftlichen Vereinbarung.
+
+    5 Ein wie auch immer geartetes Bearbeitungsrecht besteht grundsätzlich nicht und bedürfte der vorangehenden schriftlichen Zustimmung durch den Urheber.
+
+    6 Eine Veröffentlichung dieser Software ist nicht erlaubt und bleibt dem Urheber vorbehalten.
+
+    7 Der Urheber behält sich vor, für die Einräumung von Rechten an dieser Software ein Lizenzentgelt einzuheben.
+
+
+English
+
+    1 (C) by Research Industrial Systems Engineering (RISE) Forschungs-, Entwicklungs- und Großprojektberatung GmbH 2016-2018 under the laws of Austria
+
+    2 The originator of this software named RISE-Blueprint "spring-platform" (computer program according to § 40a Austrian Copyright Act) is Research Industrial Systems Engineering (RISE) Forschungs-, Entwicklungs- und Großprojektberatung GmbH with it’s seat in A-2320 Schwechat.
+
+    3 The exclusive exploitation rights remain with the originator.
+
+    4 A right to use the software (licence) for private or other non-commercial purposes as well as for professional, commercial or productive use requires a separate agreement in writing.
+
+    5 A right to edit or process the software of whatever kind is basically not granted and requires the prior written consent of the originator.
+
+    6 Publication of this software is not permitted and remains reserved to the originator.
+
+    7 The originator reserves the right to levy a license fee for the granting of rights to the software.

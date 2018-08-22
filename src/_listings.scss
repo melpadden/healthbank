@@ -1,0 +1,205 @@
+@import 'variables';
+@import '~bootstrap/scss/mixins/clearfix';
+
+/**
+ * Base styles for listing pages
+ */
+
+ul.result-list {
+  padding: 0;
+}
+
+%list-icon-base {
+  & > div {
+    width: 50px;
+    height: 50px;
+
+    margin: 3px;
+
+    background: $table-accent-bg;
+
+    border-radius: 25px;
+
+    box-shadow: 1px 1px 3px rgba(128, 128, 128, 0.7);
+
+    text-align: center;
+  }
+}
+
+%base-flex-ellipsis {
+  overflow: hidden;
+
+  display: inline-block;
+
+  vertical-align: top;
+
+  max-width: 270px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  @media all and (min-width: map_get($grid-breakpoints, sm)) {
+    max-width: 250px;
+  }
+
+  @media all and (min-width: map_get($grid-breakpoints, md)) {
+    max-width: 250px;
+  }
+
+  @media all and (min-width: map_get($grid-breakpoints, lg)) {
+    max-width: 330px;
+  }
+}
+
+/**
+ * Base for flexible width boxes
+ */
+%base-flex-listing {
+  flex-basis: 1px;
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  // this is for approx. two flexible boxes
+  & > div > a,
+  & > div > span {
+    @extend %base-flex-ellipsis;
+  }
+}
+
+/**
+ * Base class for fixed width boxes
+ */
+%base-fixed-listing {
+  flex-basis: 1em;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+
+ul.result-list li.result {
+  @include clearfix;
+  display: block;
+  flex-direction: row;
+
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+
+  background-color: $white;
+  border-radius: 0.5em;
+
+  border: 1px solid #E0E6E7;
+
+  @media all and (min-width: map_get($grid-breakpoints, sm)) {
+    display: flex;
+  }
+
+  &[role='button']:hover {
+    background-color: #FDF7F3;
+  }
+
+  .base-flex-listing {
+    @extend %base-flex-listing;
+  }
+
+  .base-fixed-listing {
+    @extend %base-fixed-listing;
+  }
+
+  .type-icon {
+    @extend %list-icon-base;
+    @extend .base-fixed-listing;
+
+    flex-basis: 4.5em;
+    float: right;
+
+    & > div {
+      font-size: 180%;
+      line-height: 50px;
+    }
+  }
+
+  .logo {
+    flex-basis: 3.5em;
+    flex-grow: 0;
+    flex-shrink: 0;
+    float: right;
+
+    img {
+      overflow: hidden;
+
+      width: 3.1em;
+      height: 3.1em;
+
+      border: 1px solid #999999;
+      border-radius: 50%;
+      box-shadow: 1px 1px 3px rgba(128, 128, 128, 0.7);
+    }
+  }
+}
+
+ul.result-list li.no-result {
+  display: block;
+
+  padding: 3em;
+
+  font-size: 120%;
+  font-style: italic;
+  text-align: center;
+}
+
+ul.result-list li.more {
+  display: block;
+
+  .btn {
+    display: block;
+
+    margin: 1em 2em;
+    padding: 12px 24px;
+  }
+  .text {
+    padding: 0 1em;
+  }
+}
+
+.search-sidebar {
+  overflow: hidden;
+
+  display: block;
+
+  max-height: 0;
+
+  opacity: 0;
+
+  transition: max-height 350ms ease, opacity 350ms ease;
+
+  &.show {
+    height: auto;
+    max-height: 400px;
+
+    opacity: 1;
+  }
+
+  /* enforce display when screen is wide enough */
+  @media all and (min-width: map_get($grid-breakpoints, lg)) {
+    display: block;
+
+    max-height: none;
+
+    opacity: 1;
+  }
+
+  .icon-row {
+    display: inline-flex;
+
+    width: calc(100% - 1.7em);
+
+    &.btn-group label {
+      flex-grow: 1;
+    }
+  }
+
+  svg {
+    vertical-align: middle;
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "timelineApiHost": "$TIMELINE_API_HOST",
+  "identityApiHost": "$IDENTITY_API_HOST"
+}

@@ -1,0 +1,19 @@
+<div class="input-group date-picker-internal">
+  <input ngbDatepicker
+         [formControl]="formCtrl"
+         #d="ngbDatepicker"
+         class="form-control"
+         placeholder="{{'common.datepicker.placeholder' | translate}}"
+         maxlength="10"
+         [autoClose]="true"
+         [minDate]="minDate"
+         [startDate]="startDate"
+         [maxDate]="maxDate">
+  <div class="input-group-append"></div>
+  <button class="btn btn-outline-light" (click)="d.toggle()" type="button">
+    <!-- TODO: fix style and incon -->
+    <svg class="ma-icon-today" aria-hidden="true">
+      <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-today"></use>
+    </svg>
+  </button>
+</div>

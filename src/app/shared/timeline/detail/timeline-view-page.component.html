@@ -1,0 +1,24 @@
+<div *ngIf="timelineItem">
+  <br>
+  <div class="row form-group">
+    <h1 class="clearfix col-sm-12 col-md-10 text-truncate">
+      {{ timelineItem.metadata.title}}
+    </h1>
+    <div class="d-flex form-inline float-right float-sm-left col-sm-12 col-md-2" *ngIf="authService.isOwner(timelineItem)">
+      <button class='btn btn-outline-secondary mr-2' appShareItem [item]="timelineItem" [sharedContacts]="sharedContacts">
+        {{ 'timelineViewPage.share' | translate }}
+      </button>
+    <div ngbDropdown >
+      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle></button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button class="dropdown-item pointer" (click)="openDeleteConfirmDialog(timelineItem)">
+          {{ 'timelineViewPage.delete' | translate }}
+        </button>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div *ngIf="timelineItem">
+    <app-timeline-view [item]="timelineItem" [sharedContacts]="sharedContacts"></app-timeline-view>
+  </div>
+</div>

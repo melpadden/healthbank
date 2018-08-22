@@ -1,0 +1,64 @@
+<table class="table table-sm table-hover">
+  <ng-content select="thead"></ng-content>
+
+  <thead>
+    <tr *ngIf="enableColumnFilters">
+      <th *ngFor="let col of columns">
+        <input type="text"
+               *ngIf="!col.disableFiltering"
+               [(ngModel)]="columnFilters[col.key]"
+               (keyup)="onChangeFilter()">
+      </th>
+    </tr>
+
+    <tr>
+      <th *ngFor="let col of columns">
+        <a (click)="onChangeSorting(col)">
+          <span>
+            {{col.label}}
+          </span>
+
+          <ng-container *ngIf="sortColumn === col.key && !col.disableSorting">
+            <svg class="ma-icon-sort" aria-hidden="true" *ngIf="sortDirection === SortDirection.ASC">
+              <use xlink:href="assets/images/symbol-defs.svg#ma-icon-arrow_drop_up"></use>
+            </svg>
+
+            <svg class="ma-icon-sort" aria-hidden="true" *ngIf="sortDirection === SortDirection.DESC">
+              <use xlink:href="assets/images/symbol-defs.svg#ma-icon-arrow_drop_down"></use>
+            </svg>
+          </ng-container>
+        </a>
+      </th>
+    </tr>
+  </thead>
+
+  <ng-container *ngIf="enableCustomTableBody;else defaultTableBody"><ng-content select="tbody"></ng-content></ng-container>
+
+  <ng-template #defaultTableBody>
+    <tbody>
+      <tr *ngFor="let row of rows" (click)="onClickRow(row)">
+        <td *ngFor="let col of columns">
+          {{ accessRow(row, col) | async }}
+        </td>
+      </tr>
+    </tbody>
+  </ng-template>
+
+</table>
+
+<div class="row">
+  <div class="col paging-info">
+    {{pageStart}} bis {{pageEnd}} von {{totalLength}} Einträgen
+  </div>
+
+  <div class="col paging-control">
+    <div class="float-right">
+      <ngb-pagination [collectionSize]="totalLength"
+                      [(page)]="page"
+                      [maxSize]="5"
+                      [ellipses]="true"
+                      [pageSize]="pageSize"
+                      (pageChange)="onPageChanged()"></ngb-pagination>
+    </div>
+  </div>
+</div>

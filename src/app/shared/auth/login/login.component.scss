@@ -1,0 +1,22 @@
+@import '../../../../variables';
+@import '~bootstrap/scss/bootstrap';
+
+h1 {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+@media all and (max-width: 400px) {
+
+  .card {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+}
+
+.profile-icon {
+  width: 50px;
+  height: 50px;
+}

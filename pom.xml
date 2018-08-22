@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>coop.healthbank</groupId>
+        <artifactId>healthbank-common-root</artifactId>
+        <version>1.0.2-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+
+    <!-- maven-versions-plugin needs this groupId element-->
+    <groupId>coop.healthbank</groupId>
+    <artifactId>healthbank-timeline-web</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>healthbank timeline web frontend</name>
+
+    <properties>
+        <backend.timeline.version>1.0.0-SNAPSHOT</backend.timeline.version>
+
+
+        <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
+        <node.version>v8.9.4</node.version>
+        <npm.version>5.10.0</npm.version>
+
+        <skipTests>false</skipTests>
+        <skipCompression>false</skipCompression>
+        <frontend.browser>ChromeHeadless</frontend.browser>
+        <npm.buildCommand>build -- --env=prod</npm.buildCommand>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>coop.healthbank</groupId>
+            <artifactId>timeline-rest-impl</artifactId>
+            <version>${backend.timeline.version}</version>
+            <!-- a simple test scope won't work here: we want spring-boot:run to work
+                the transitivity of the provided scope does the right thing -->
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>coop.healthbank</groupId>
+            <artifactId>identity-rest-impl</artifactId>
+            <version>${backend.timeline.version}</version>
+            <!-- a simple test scope won't work here: we want spring-boot:run to work
+                the transitivity of the provided scope does the right thing -->
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <executions>
+                        <!-- don't repackage here, we want a clean frontend jar-->
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                            <configuration>
+                                <skip>true</skip>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${frontend-maven-plugin.version}</version>
+                    <configuration>
+                        <nodeVersion>${node.version}</nodeVersion>
+                        <npmVersion>${npm.version}</npmVersion>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>install npm dependencies</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>azure</id>
+            <properties>
+                <npm.buildCommand>build -- --env=azure-dev</npm.buildCommand>
+            </properties>
+        </profile>
+        <profile>
+            <id>risedev</id>
+            <properties>
+                <npm.buildCommand>build -- --env=risedev</npm.buildCommand>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>web</id>
+            <build>
+                <resources>
+                    <!-- filter only index.html, this is where the filtering markers are -->
+                    <resource>
+                        <directory>${project.build.directory}/generated-resources</directory>
+                        <filtering>true</filtering>
+                        <includes>
+                            <include>**/index.html</include>
+                        </includes>
+                    </resource>
+                    <resource>
+                        <directory>${project.build.directory}/generated-resources</directory>
+                        <filtering>false</filtering>
+                        <excludes>
+                            <exclude>**/index.html</exclude>
+                        </excludes>
+                    </resource>
+                    <!-- copy iis configuration files -->
+                    <resource>
+                        <directory>${project.basedir}/iis-config</directory>
+                        <targetPath>${project.build.directory}/classes/static</targetPath>
+                        <filtering>false</filtering>
+                        <includes>
+                            <include>**/*</include>
+                        </includes>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>lint sources</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run lint-ci</arguments>
+                                    <skip>${skipTests}</skip>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>frontend build</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run ${npm.buildCommand}</arguments>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>frontend compression</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run compress</arguments>
+                                    <skip>${skipCompression}</skip>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>it</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>it-start-application</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>${skipTests}</skip>
+                                    <arguments>
+                                        <argument>--spring.profiles.active=test,e2e${spring.profiles}</argument>
+                                    </arguments>
+                                    <maxAttempts>100</maxAttempts>
+                                    <wait>1000</wait> <!-- check every second -->
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>it-stop-application</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>${skipTests}</skip>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>frontend integration tests</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run test -- --useUrl http://localhost:18080 --browser
+                                        ${frontend.browser}
+                                    </arguments>
+                                    <skipTests>${skipTests}</skipTests>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>frontend end-2-end tests</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run e2e -- --no-serve --browsers ${frontend.browser} --base-href
+                                        http://localhost:18080/ui/
+                                    </arguments>
+                                    <!-- disable protractor tests until frontend can be served properly -->
+                                    <skipTests>true</skipTests>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

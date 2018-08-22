@@ -1,0 +1,182 @@
+/**
+ * This file contains general structural declarations to adapt bootstrap for all customers
+ */
+
+@import '~bootstrap/scss/mixins/hover';
+@import '~bootstrap/scss/mixins/background-variant';
+
+@font-face {
+  font-family: 'PT Sans';
+  src: url('assets/fonts/PTS55F-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT Sans';
+  src: url('assets/fonts/PTS75F-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* General Styles */
+ngx-form-error .error {
+  color: #C90000;
+}
+
+.breadcrumb {
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+  background-color: transparent;
+}
+
+.navbar {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  align-items: stretch;
+  box-shadow: 0 3px 10px 0 rgba(59, 67, 75, 0.2);
+}
+
+.navbar-dark .navbar-brand:focus,
+.navbar-dark .navbar-brand:hover,
+.navbar-dark .navbar-brand {
+  background-color: #FFFFFF;
+  color: #000000;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.navbar-dark .navbar-brand,
+.navbar-dark .navbar-nav .nav-link {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #FFFFFF;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+label {
+  font-weight: bold;
+}
+
+/* Buttons and Badges */
+.badge-light {
+  border: 1px solid #AED7E9;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 1rem;
+  font-weight: normal;
+  max-width: 100%;
+}
+
+.btn img {
+  width: 1.2em;
+  position: relative;
+  top: -0.25rem;
+}
+
+.btn-outline-light {
+  border-color: $input-border-color;
+  border-radius: 0 $border-radius $border-radius 0;
+  color: map_get($healthbank-colors, 'gray');
+}
+
+.btn-outline-light:hover {
+  color: #FFF;
+  background: map_get($healthbank-colors, 'gray');
+}
+
+/* LOGIN PAGES */
+
+.centered-form,
+.centered-box {
+  margin-top: 2rem;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centered-form {
+  text-align: left;
+}
+
+.centered-box {
+  text-align: center;
+  max-width: 400px;
+
+  .title {
+    max-width: 400px;
+  }
+
+  .container {
+    width: auto;
+    text-align: left;
+
+    @media all and (min-width: map_get($grid-breakpoints, sm)) {
+      border-radius: $border-radius;
+    }
+  }
+}
+/* List Styles */
+.general-list {
+  padding: 0;
+}
+
+.general-list li {
+  list-style: none;
+}
+
+.no-result {
+
+}
+
+
+/* Timeline List */
+.timeline-list {
+  padding: 0;
+}
+
+.timeline-list-item {
+  padding: 1rem;
+  border-radius: $card-border-radius;
+  background-color: $card-bg;
+  border: 1px solid $card-border-color;
+
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+
+  margin-bottom: 0.5rem;
+}
+
+$profile_icon_color: #E6E6E6;
+.profile-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid $profile_icon_color;
+  text-align: center;
+  line-height: 230%;
+  font-size: 140%;
+  flex: 0 0 auto;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: $profile_icon_color;
+  color: darken($profile_icon_color, 60%);
+  font-weight: bold;
+}
+
+.max-width-100 {
+  max-width: 100%;
+}

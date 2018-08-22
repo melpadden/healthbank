@@ -1,0 +1,47 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0">
+    <profiles>
+        <profile>
+            <id>gitlab-rise</id>
+            <properties>
+                <altReleaseDeploymentRepository>rise::default::https://a9y.risedev.at/maven-rise-releases/</altReleaseDeploymentRepository>
+                <altSnapshotDeploymentRepository>rise::default::https://a9y.risedev.at/maven-rise-snapshots/</altSnapshotDeploymentRepository>
+            </properties>
+            <!-- needed to make maven resolve the parent POM if its a snapshot -->
+            <repositories>
+                <repository>
+                    <id>rise</id>
+                    <url>https://a9y.risedev.at/maven-group-rise/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>rise</id>
+                    <url>https://a9y.risedev.at/maven-group-rise/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>gitlab-rise</activeProfile>
+    </activeProfiles>
+
+    <mirrors>
+        <mirror>
+            <id>rise</id>
+            <url>ttps://a9y.risedev.at/maven-group-rise/</url>
+            <mirrorOf>central,healthbank-visualstudio.com-healthbank</mirrorOf>
+        </mirror>
+    </mirrors>
+</settings>

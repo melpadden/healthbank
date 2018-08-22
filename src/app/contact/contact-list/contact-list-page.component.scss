@@ -1,0 +1,96 @@
+@import '../../../variables';
+@import '../../../listings';
+
+.pending-list-item {
+  background-color: #EFF3F3;
+}
+
+.pending-list-item-title-wrapper {
+  order: 0;
+  flex-wrap: wrap;
+  flex: 1 1 100%;
+  margin-bottom: 1rem;
+}
+
+.pending-list-item-valid {
+  flex: 0 0 auto;
+  order: 2;
+}
+
+@media all and (min-width: map_get($grid-breakpoints, md)) {
+
+  .pending-list-item-title-wrapper {
+    order: 0;
+    flex: 1 1 70%;
+  }
+
+  .pending-list-item-valid {
+    flex: 0 0 30%;
+    order: 1;
+  }
+
+  .profile-icon {
+    margin-bottom: 0;
+  }
+
+}
+
+.contact-list-item-title-wrapper {
+  order: 0;
+  flex-wrap: wrap;
+  flex: 1 1 100%;
+  margin-bottom: 1rem;
+}
+
+.contact-list-item-title {
+  max-width: calc(100% - 70px);
+  display: inline-block;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.contact-list-item-text {
+  display: inline-block;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.contact-list-item-email {
+  flex: 0 0 100%;
+  order: 1;
+}
+
+.contact-list-item-shared {
+  flex: 0 0 33%;
+  order: 3;
+  flex-wrap: wrap;
+}
+
+.contact-list-item-shared-item {
+  flex: 0 0 auto;
+  order: 1;
+}
+
+@media all and (min-width: map_get($grid-breakpoints, md)) {
+
+  .contact-list-item-title-wrapper {
+    flex: 1 1 33%;
+    order: 0;
+  }
+
+  .contact-list-item-email {
+    flex: 1 1 33%;
+    order: 1;
+  }
+
+  .contact-list-item-shared {
+    flex: 0 0 25%;
+    order: 3;
+    flex-wrap: wrap;
+    margin-left: 0.5rem;
+  }
+}

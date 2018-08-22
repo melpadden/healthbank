@@ -1,0 +1,39 @@
+/**
+ * This file contains the general variable declarations to theme bootstrap
+ */
+
+$healthbank-colors: (
+  'blue': #007E9B,
+  'light-blue': #5DAFD4,
+  'link-blue': #359BC9,
+  'orange': #DD6912,
+  'gray': #62696F,
+  'dark-gray': #3B434B,
+  'light-gray': #E8E8E8,
+  'red': #D6525F
+);
+
+$theme-colors: (
+  'primary':    map_get($healthbank-colors, 'blue'),
+  'secondary':  map_get($healthbank-colors, 'gray'),
+  'success':    $success,
+  'info':       $info,
+  'warning':    $warning,
+  'danger':     map_get($healthbank-colors, 'red'),
+  'light':      #FFFFFF,
+  'dark':       map_get($healthbank-colors, 'orange')
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 962px
+);
+
+
+$body-bg: #F7F7F7;
+
+$link-color: map_get($healthbank-colors, 'link-blue');
+
+$input-border-color: map_get($healthbank-colors, 'light-gray');

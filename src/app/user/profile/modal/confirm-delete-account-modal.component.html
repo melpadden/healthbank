@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ 'user.profile.confirm.delete.account.modal.label' | translate }}</h4>
+</div>
+<div class="modal-body text-left">
+  <label>
+    {{ 'user.profile.confirm.delete.account.modal.message1' | translate }}
+    <br>
+    {{ 'user.profile.confirm.delete.account.modal.message2' | translate }}
+  </label>
+  <br>
+  <strong>
+    {{ 'user.profile.confirm.delete.account.modal.message3' | translate }}
+  </strong>
+  <div class="row form-group">
+    <label class="col-sm-12 col-md-3">
+      {{ 'user.profile.confirm.delete.account.modal.code' | translate }}
+    </label>
+    <div class="col-sm-12 col-md-7">
+      <input id="deletion-code-input" type="text" [(ngModel)]="deletionCode" style="width: 100%;" maxlength="8"/>
+    </div>
+  </div>
+</div>
+<div class="modal-footer justify-content-between">
+  <button id="delete-profile-confirm" type="button" class="btn btn-danger pull-right"
+          (click)="confirmDeleteAccount()"
+          [disabled]="!deletionCode">
+    {{ 'user.profile.confirm.delete.account.modal.confirm.code' | translate }}
+  </button>
+  <button id="delete-profile-cancel" type="button" class="btn btn-secondary" (click)="close()">
+    {{ 'user.profile.confirm.delete.account.modal.cancel' | translate }}
+  </button>
+</div>

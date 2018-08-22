@@ -1,0 +1,17 @@
+{
+  "timelineApiHost": "https://dev-timeline.healthbank.me",
+  "identityApiHost": "https://dev-identity.healthbank.me",
+  "mediplanActive" : true,
+  "qrConvertApiHost": "https://documedis.hcisolutions.ch/app/medication/medicationplan",
+  "qrMetadataApiHost": "https://galenicawrapper.azurewebsites.net/Metadata",
+  "organization" : "healthbank, Blegistrasse 17A, 6340 Thun",
+  "authority": "documedis.hcisolutions.ch",
+  "acceptLanguage": "de-CH",
+  "hciCustomerId": "7601001362383",
+  "hciIndex": "hospINDEX",
+  "hciSoftware": "Documedis",
+  "hciSoftwareOrg": "HCI Solutions AG",
+  "hciSoftwareOrgId": "7601001362383",
+  "Accept": "application/pdf"
+}
+

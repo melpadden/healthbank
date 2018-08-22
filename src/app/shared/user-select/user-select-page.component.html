@@ -1,0 +1,42 @@
+<div class="centered-box">
+  <h3> {{ 'landingPage.title' | translate }}</h3>
+  <div class="mt-4 mb-2">
+    <ul class="result-list">
+      <li *ngFor="let user of users$ | async" class="result pointer" (click)="itemClicked(user)" role="button"
+          style="padding:0">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-2 mt-2">
+              <div class="profile-icon">
+                {{user.user.firstName?.slice(0,1).toUpperCase()}}{{user.user.lastName?.slice(0,1).toUpperCase()}}
+              </div>
+            </div>
+
+            <div class="col-8 align-self-center text-left text-truncate font-weight-bold">{{user.user.firstName}}
+              {{user.user.lastName}}
+            </div>
+
+            <div class="col-2 align-self-center">
+              <svg class="ma-icon-keyboard_arrow_right" aria-hidden="true">
+                <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-keyboard_arrow_right"></use>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li *ngIf="(users$ | async)?.length === 0" class="card">
+        <div class="mt-5 mb-5 ">
+          <strong><i>{{ 'userSelectPage.emptyUserList' | translate }}</i></strong>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="text-left ml-2 ml-sm-0">
+    <p><strong>{{ 'userSelectPage.addUser.p1.l1' | translate }}</strong>
+      <br>
+      <a [routerLink]="" (click)="createUser()">
+        {{ 'userSelectPage.addUser.p2.l1' | translate }}
+      </a>
+    </p>
+  </div>
+</div>

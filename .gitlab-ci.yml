@@ -1,0 +1,67 @@
+stages:
+  - build
+  - post-build
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -Dfile.encoding=UTF-8 -Djava.awt.headless=true -DdeployAtEnd=true \
+    -Dsonar.jacoco.itReportPath=${CI_PROJECT_DIR}/target/jacoco/jacoco-it.exec -Dsonar.jacoco.reportPath=${CI_PROJECT_DIR}/target/jacoco/jacoco.exec -Dsonar.jacoco.reportMissing.force.zero=true \
+    -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true "
+  MAVEN_CLI_OPTS: "-B -s .gitlab-ci-mvn.xml --show-version "
+  GIT_REMOTE_URL: "ssh://healthbank@vs-ssh.visualstudio.com:22/_ssh/Timeline%20Web%20Application"
+  IMAGE_TAG: latest
+
+build-statics:
+  image: "docker-rise.a9y.risedev.at/blueprints/docker-e2e:20180321"
+  stage: build
+  script:
+    - a9y-enable-mvn rise healthbank-visualstudio.com-healthbank
+    - mvn $MAVEN_CLI_OPTS -U -Dfrontend.browser=ChromeCI -Pit,web,gitlab-rise,risedev -T4 clean verify
+  retry: 1
+  artifacts:
+    expire_in: "6h"
+    paths:
+      - target/classes
+  cache:
+    paths:
+      - .m2/repository
+      - node
+      - node_modules
+
+.build-docker-template: &docker-template
+  stage: post-build
+  image: "docker-rise.a9y.risedev.at/build/docker:latest"
+  tags:
+    - docker
+  before_script:
+    - a9y-docker-login
+  script:
+    - a9y-docker-build healthbank/timeline-web:${IMAGE_TAG} .
+    - a9y-docker-push healthbank/timeline-web:${IMAGE_TAG}
+
+docker-mainline:
+  <<: *docker-template
+  only:
+    - develop
+
+docker-tag:
+  <<: *docker-template
+  variables:
+    IMAGE_TAG: ${CI_COMMIT_TAG}
+  only:
+    - tags
+
+.push-changes-to-vs:
+  stage: post-build
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan vs-ssh.visualstudio.com > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - git remote set-url vsts $GIT_REMOTE_URL || git remote add vsts $GIT_REMOTE_URL
+    - git push vsts "HEAD:refs/heads/$CI_COMMIT_REF_NAME"
+  only:
+    - branches
+

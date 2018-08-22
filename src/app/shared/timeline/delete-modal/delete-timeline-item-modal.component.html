@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{'timelineViewPage.deleteModal.title' | translate}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <p>{{'timelineViewPage.deleteModal.message' | translate}}</p>
+
+  <p *ngIf="getCount() > 0">
+    <svg class="ma-icon-visibility" aria-hidden="true" height="20px">
+      <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-visibility"></use>
+    </svg>
+    <span>{{ 'timelineView.sharedWith' | translate }} {{'timelineView.people' | translate : {count: getCount()} }}</span>
+  </p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary  mr-auto" (click)="onConfirm()">
+    {{'timelineViewPage.deleteModal.confirmLabel' | translate}}
+  </button>
+  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss()">
+    {{'timelineViewPage.deleteModal.cancelLabel' | translate}}
+  </button>
+</div>

@@ -1,0 +1,8 @@
+<div style="text-align: center;">
+  request queue state: <span id="request-queue-state" class="badge badge-info">{{getCurrentQueueState()}}</span> |
+  <span id="queued-request-count" class="badge badge-info">{{getQueuedRequestCount()}}</span> requests queued |
+  Queue size: <span id="request-queue-size" class="badge badge-info">{{getCurrentQueueSize()}} kByte</span> |
+  Current: <span id="current-upload-percent" class="badge badge-info">{{getCurrentUploadProgressPercent()}}%</span>
+  of <span id="current-upload-size" class="badge badge-info">{{getCurrentSize()}} kByte</span> |
+  <button (click)="clearUploadQueue()" title="clear queue" class="btn btn-sm btn-danger" [disabled]="getQueuedRequestCount() === 0">X</button>
+</div>

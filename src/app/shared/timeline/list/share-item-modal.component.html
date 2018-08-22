@@ -1,0 +1,69 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{'share-contact-modal.title' | translate}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <h3 class="text-truncate">{{timelineItem.metadata.title}}</h3>
+  <hr>
+
+  <ul class="general-list">
+    <li *ngIf="sharedContacts?.length === 0" class="no-result">
+      {{ 'share-contact-modal.private.p1' | translate }}
+    </li>
+    <li *ngFor="let contact of sharedContacts" class="mb-3">
+      <div class="row">
+        <div class="col-2 d-inline align-self-center pb-md-0">
+          <div class="profile-icon">
+            {{contact.contactInfo.firstname?.slice(0,1).toUpperCase()}}{{contact.contactInfo.lastname?.slice(0,1).toUpperCase()}}
+          </div>
+        </div>
+        <div class="col-8 align-self-center d-inline text-truncate pb-md-0">
+          <span>{{contact.contactInfo.firstname}} {{contact.contactInfo.lastname}}</span> <br>
+        </div>
+        <div class="col-1 align-self-center d-inline">
+          <button type="button" class="close float-left" (click)="removeContact(contact)" aria-label="Close" [disabled]="disable">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <hr>
+
+  <form [formGroup]="addContactForm" novalidate>
+    <div class="form-group row">
+      <label class="col-lg-2 col-sm-12 col-form-label">
+        {{ 'share-contact-modal.add.contact.label' | translate }}
+      </label>
+      <div class="col-lg-10 col-sm-12">
+        <tag-input id="addContact" formControlName="contacts"
+                   #contactInput
+                   [maxItems]="8"
+                   [placeholder]="contactInputTranslations['placeholder']"
+                   [secondaryPlaceholder]="contactInputTranslations['secondaryPlaceholder']"
+                   [onlyFromAutocomplete]="true"
+                   [theme]="'healthbank-theme'"
+                   [disable]="disable">
+          <tag-input-dropdown [zIndex]="1100" [autocompleteItems]="filteredItems" [showDropdownIfEmpty]='true'>
+            <ng-template let-item="item" let-index="index">
+              <svg class="align-middle d-inline-block ma-icon-person" aria-hidden="true">
+                <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-person"></use>
+              </svg>
+             {{ item.display }}
+            </ng-template>
+          </tag-input-dropdown>
+
+        </tag-input>
+      </div>
+    </div>
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary mr-auto" (click)="onConfirm()" [disabled]="disable">
+    {{'share-contact-modal.submit.button' | translate}}
+  </button>
+</div>

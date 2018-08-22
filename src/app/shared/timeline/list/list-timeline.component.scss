@@ -1,0 +1,99 @@
+@import '../../../../variables';
+@import '../../../../listings';
+
+.timeline-list-item-title-wrapper {
+  order: 0;
+  flex: 1 1 100%;
+  margin-bottom: 1rem;
+}
+
+.timeline-list-item-title {
+  max-width: calc(100% - 70px);
+  display: inline-block;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.timeline-list-item-shared-state {
+  margin-top: 0.25rem;
+}
+
+.timeline-list-item-download-content,
+.timeline-list-item-tags,
+.timeline-list-item-date,
+.timeline-list-item-shared-state {
+  flex: 1 1 100%;
+  order: 2;
+}
+
+.timeline-list-item-image {
+  flex: 0 0 auto;
+  order: 1;
+}
+
+@media all and (min-width: map_get($grid-breakpoints, md)) {
+
+  .timeline-list-item-title-wrapper,
+  .timeline-list-item-download-content,
+  .timeline-list-item-tags,
+  .timeline-list-item-date {
+    order: 0;
+
+    /*=Note: width of image + padding */
+    padding-right: calc(150px + 1rem);
+  }
+
+  .timeline-list-item-image {
+    position: absolute;
+    right: 1em;
+  }
+
+  .timeline-list-item-date,
+  .timeline-list-item-shared-state {
+    flex: 1 1 50%;
+    margin-top: 1.25rem;
+  }
+
+  .timeline-list-item-shared-state {
+    text-align: right;
+  }
+
+  .timeline-list-item-date.tags-visible,
+  .timeline-list-item-shared-state.tags-visible {
+    margin-top: 0;
+  }
+}
+
+.queuedOverlay {
+  display: block;
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  background-color: #FFFFFF;
+  opacity: 0.9;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  border-radius: 0.5em;
+  cursor: progress;
+}
+
+.deletedOverlay {
+  display: block;
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  background-color: #FF6644;
+  opacity: 0.75;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  border-radius: 0.5em;
+  cursor: not-allowed;
+}

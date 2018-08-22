@@ -1,0 +1,27 @@
+<div class="row form-group">
+  <label class="col-sm-12 col-md-2">
+    {{ 'contactDetail.name' | translate }}
+  </label>
+  <div class="col-sm-12 col-md-8">
+    {{ contact.contactInfo.firstname}} {{ contact.contactInfo.lastname}}
+  </div>
+</div>
+
+<div class="row form-group">
+  <label class="col-sm-12 col-md-2">
+    {{ 'contactDetail.email' | translate }}
+  </label>
+  <div class="col-sm-12 col-md-8">
+    <a [href]="'mailto:' + contact.contactInfo.email">{{ contact.contactInfo.email}}</a>
+  </div>
+</div>
+
+<div class="row form-group" *ngIf="contact.contactInfo.phone">
+  <label class="col-sm-12 col-md-2">
+    {{ 'contactDetail.phone' | translate }}
+  </label>
+  <div class="col-sm-12 col-md-8">
+    <a [href]="'tel:' + contact.contactInfo.phone">{{ contact.contactInfo.phone}}</a>
+  </div>
+</div>
+

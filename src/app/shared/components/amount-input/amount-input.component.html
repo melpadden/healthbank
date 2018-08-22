@@ -1,0 +1,13 @@
+<input
+  *ngIf="show"
+  [id]="fieldId"
+  type="text"
+  class="form-control {{textAlignClass}}"
+  [formControl]="internalControl"
+  placeholder="{{placeholder}}"
+  (blur)="reformat()" />
+
+<ngx-form-error
+  *ngIf="!internalControl.disabled"
+  [control]="internalControl"
+></ngx-form-error>

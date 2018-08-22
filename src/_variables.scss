@@ -1,0 +1,11 @@
+// import bootstrap variables, this is to import this file and use bootstrap variables. Also then we can overwrite
+// the defaults here
+
+// eventually import a bootstrap theme here
+@import 'bootstrap-theme';
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables';
+@import 'themes/healthbank_variables';
+
+
+// Define project specific variables here

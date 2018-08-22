@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ 'user.profile.delete.account.modal.label' | translate }}</h4>
+</div>
+<div class="modal-body text-left">
+  <label>
+    {{ 'user.profile.delete.account.modal.message1' | translate }}
+    <br>
+    <br>
+    {{ 'user.profile.delete.account.modal.message2' | translate }}
+    <br>
+    <br>
+    {{ 'user.profile.delete.account.modal.message3' | translate }}
+  </label>
+  <strong>
+    {{ user.email }}
+  </strong>
+</div>
+<div class="modal-footer justify-content-between">
+  <button id="delete-profile-confirm" type="button" class="btn btn-danger pull-right" (click)="deleteAccount()">
+    {{ 'user.profile.delete.account.modal.code' | translate }}
+  </button>
+  <button id="delete-profile-cancel" type="button" class="btn btn-secondary" (click)="close()">
+    {{ 'user.profile.delete.account.modal.cancel' | translate }}
+  </button>
+</div>

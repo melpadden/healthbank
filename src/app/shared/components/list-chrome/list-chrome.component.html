@@ -1,0 +1,93 @@
+<div class="row">
+  <form class="order-lg-2 col-lg-3 search-sidebar form-horizontal" [ngbCollapse]="searchCollapsed">
+    <div *ngIf="hasTextSearch()" class="form-group">
+      <div class="col-xs-12">
+        <input type="text" class="form-control icon-row" id="search-input" name="search"
+               [(ngModel)]="searchText" (input)="filterList()"
+               placeholder="Suche">
+        <svg class="ma-icon-search" aria-hidden="true">
+          <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-search"></use>
+        </svg>
+      </div>
+    </div>
+
+    <hr *ngIf="hasTextSearch() && showSortField()"/>
+
+    <div *ngIf="showSortField()" class="form-group">
+      <div class="col-xs-12">
+        <div id="sort-direction" class="btn-group btn-group-toggle icon-row" ngbRadioGroup
+             [(ngModel)]="sortDir" (ngModelChange)="sortList()" name="sort-dir">
+          <label ngbButtonLabel id="date-sort-asc" class="btn-outline-secondary">
+            <input ngbButton type="radio" [value]="SortDirection.ASC">
+            Auf-
+          </label>
+          <label ngbButtonLabel id="date-sort-desc" class="btn-outline-secondary">
+            <input ngbButton type="radio" [value]="SortDirection.DESC">
+            Absteigend
+          </label>
+        </div>
+        <svg class="ma-icon-sort" aria-hidden="true">
+          <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-sort"></use>
+        </svg>
+      </div>
+    </div>
+
+    <div *ngIf="showSortField()" class="form-group">
+      <div class="col-xs-12">
+        <div class="btn-group-vertical btn-group-toggle d-block" ngbRadioGroup
+             [(ngModel)]="sortField" (ngModelChange)="sortList()" name="sort-field">
+          <label *ngFor="let s of sort; let index=index" ngbButtonLabel
+                 id="type-sort-{{index + 1}}" class="btn-outline-secondary">
+            <input ngbButton type="radio" [value]="index">{{s.label}}</label>
+        </div>
+      </div>
+    </div>
+
+    <hr *ngIf="hasTextSearch() && hasFilter()"/>
+
+    <div *ngIf="hasFilter()" class="form-group">
+      <div class="col-xs-12">
+        <div class="btn-group-vertical btn-group-toggle icon-row" id="sort-all-enable">
+          <button id="type-select-all" class="btn btn-outline-secondary" [class.active]="filterSelection === null"
+                  (click)="resetFilter()">
+            Alle
+          </button>
+        </div>
+        <svg class="ma-icon-filter_list" aria-hidden="true">
+          <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-filter_list"></use>
+        </svg>
+      </div>
+    </div>
+
+    <div *ngIf="hasFilter()" class="form-group">
+      <div class="col-xs-12">
+        <div class="btn-group-vertical btn-group-toggle d-block" ngbRadioGroup
+             [(ngModel)]="filterSelection" (ngModelChange)="filterList()" name="filter-selection">
+          <label *ngFor="let f of filter; let index = index" ngbButtonLabel
+                 id="type-select-{{index + 1}}" class="btn-outline-secondary">
+            <input ngbButton type="radio" [value]="index">
+            {{f.label}}
+          </label>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div [ngClass]="hasFilter() || hasTextSearch() || showSortField() ? 'pull-lg-3 col-lg-9' : 'col-lg-12'">
+    <ul class="general-list">
+      <ng-content></ng-content>
+
+      <li *ngIf="filteredList?.length === 0" class="no-result">
+        {{ 'listChrome.emptyList' | translate }}
+      </li>
+
+      <li class="more" *ngIf="showMore()">
+        <span id="list-load-more" (click)="moreItems()" class="btn btn-secondary">
+          <span class="text" *ngIf="!loadLazy"><strong>{{getToExtend()}} mehr laden</strong> - {{getRemaining()}} verbleiben</span>
+          <span class="text" *ngIf="loadLazy"><strong>{{ 'listChrome.loadMore' | translate }}</strong></span>
+          <span class="dropdown-toggle"></span>
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>

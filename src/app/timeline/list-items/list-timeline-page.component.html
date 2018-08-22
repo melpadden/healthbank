@@ -1,0 +1,9 @@
+<h1 class="clearfix mb-3">{{ 'listTimelinePage.title' | translate }}
+  <span class="float-right">
+       <a id="new-timeline-entry" routerLink="/timeline/addData"
+          [queryParams]="(route.queryParams | async)['owner'] ? {owner: (route.queryParams | async)['owner']}: {}"
+          class="btn btn-primary">{{ 'listTimelinePage.add' | translate }}</a>
+      </span>
+</h1>
+
+<app-list-timeline [loadedItems$]="loadedItems$" [showMoreToken]="responseContinuation" (loadMoreItems)="loadMore($event)"></app-list-timeline>

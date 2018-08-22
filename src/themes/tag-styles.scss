@@ -1,0 +1,45 @@
+@import '~ngx-chips/core/styles/core/_core.scss';
+@import '../variables';
+
+//this is the tag's theme
+$healthbank-tag-theme: (
+  background: #FFF,
+  padding: 0.25rem,
+  font-size: 1rem,
+  font-weight: normal,
+  border-radius: 4px,
+  line-height: inherit,
+  font-family: $font-family-sans-serif !important,
+  height: auto,
+  background-focused: map_get($healthbank-colors, 'light-blue'),
+  background-active: map_get($healthbank-colors, 'blue')
+);
+
+//apply theme to the container OPTIONAL: @include $container-theme
+::ng-deep .ng2-tag-input.healthbank-theme {
+  border: 1px solid map_get($healthbank-colors, 'light-gray') !important;
+  background: #FFF;
+  border-radius: $input-border-radius;
+  padding-left: $input-padding-x !important;
+  padding-right: $input-padding-x !important;
+}
+
+::ng-deep .ng2-tag-input.healthbank-theme input {
+  font-family: $font-family-sans-serif !important;
+}
+
+// apply theme to the tags
+::ng-deep .ng2-tag-input.healthbank-theme tag {
+  @include tag-theme($healthbank-tag-theme);
+  border: 1px solid #AED7E9; // additional to theme
+}
+
+// apply theme to the delete icon OPTIONAL: @include $icon-theme
+::ng-deep .ng2-tag-input.healthbank-theme tag delete-icon {
+  line-height: inherit;
+}
+
+::ng-deep .ng2-tag-input.healthbank-theme svg {
+  height: 20px !important;
+  vertical-align: text-top !important;
+}

@@ -1,0 +1,127 @@
+<div class="centered-form">
+  <div class="container">
+    <form [formGroup]="signUpForm" id="sign-up-data-comp" novalidate>
+
+      <h1>{{'signup.data.title' | translate}}</h1>
+      <br>
+      <div class="form-group row">
+        <label class="col-lg-3 col-form-label">
+          {{'signup.data.form.firstName.label' | translate}}
+        </label>
+        <div class="col-lg-7 col-md-10">
+          <input id="first-name" formControlName="firstName" class="form-control" type="text" maxlength="128">
+          <ngx-form-error [control]="signUpForm.get('firstName')"></ngx-form-error>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-lg-3 col-form-label">
+          {{'signup.data.form.lastName.label' | translate}}
+        </label>
+        <div class="col-lg-7 col-md-10">
+          <input id="last-name" formControlName="lastName" class="form-control" type="text" maxlength="128">
+          <ngx-form-error [control]="signUpForm.get('lastName')"></ngx-form-error>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-lg-3 col-form-label">
+          {{'signup.data.form.nationality.label' | translate}}
+        </label>
+        <div class="col-lg-7 col-md-10">
+          <select id="country-input" class="form-control" name="country-sel" formControlName="nationality">
+            <option value="" disabled selected>
+            </option>
+            <option *ngFor="let countryCode of countryList" [value]="countryCode.id" selected>
+              {{countryCode.label}}
+            </option>
+          </select>
+          <ngx-form-error [control]="signUpForm.get('nationality')"></ngx-form-error>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-lg-3 col-form-label">
+          {{'signup.data.form.birthday.label' | translate}}
+        </label>
+        <div class="col-lg-4 col-md-10">
+          <app-date-picker id="date-of-birth" formControlName="birthday" [maxDate]="maxBirthDate"
+                           [startDate]="dataPickerDefaultDate"></app-date-picker>
+          <ngx-form-error [control]="signUpForm.get('birthday')"></ngx-form-error>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-lg-3 col-form-label">
+          {{'signup.data.form.phone.label' | translate}}
+        </label>
+        <div class="col-lg-7 col-md-10">
+          <input id="phone" formControlName="phone" class="form-control" type="text" maxlength="32" appPhoneFormat>
+          <ngx-form-error [control]="signUpForm.get('phone')"></ngx-form-error>
+          <small id="phoneHelp" class="form-text text-muted">
+            {{'signup.data.form.phone.help' | translate}}
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-lg-3 col-form-label">
+          {{'signup.data.form.email.label' | translate}}
+        </label>
+        <div class="col-lg-7 col-md-10">
+          <input id="email" formControlName="email" class="form-control" type="text" maxlength="128">
+          <ngx-form-error [control]="signUpForm.get('email')"></ngx-form-error>
+          <small id="emailHelp" class="form-text text-muted">
+            {{'signup.data.form.email.help' | translate}}
+          </small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-lg-3 col-form-label">
+          {{'signup.data.form.pwd.label' | translate}}
+        </label>
+        <div class="col-lg-7 col-md-10">
+          <input id="password" type="password" formControlName="pwd" class="form-control" maxlength="128" minlength="8">
+          <ngx-form-error [control]="signUpForm.get('pwd')"></ngx-form-error>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-lg-3 col-form-label">
+          {{'signup.data.form.pwd.confirm.label' | translate}}
+        </label>
+        <div class="col-lg-7 col-md-10">
+          <input id="pwdConfirm" type="password" formControlName="pwdConfirm" class="form-control" maxlength="128" minlength="8">
+          <ngx-form-error [control]="signUpForm.get('pwdConfirm')"></ngx-form-error>
+          <ngx-form-error *ngIf="signUpForm.errors?.pwdSame && signUpForm.get('pwdConfirm').touched && signUpForm.get('pwd').touched"
+                          [control]="signUpForm"></ngx-form-error>
+          <small id="pwdHelp" class="form-text text-muted">
+            {{'signup.data.form.pwd.help' | translate}} <strong class="text-danger">{{'signup.data.form.pwd.help.strong' |
+            translate}}</strong> {{'signup.data.form.pwd.faq' | translate}}
+          </small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-lg-7 col-md-10 offset-lg-3 form-check-inline">
+          <div class="ml-3">
+            <input class="form-check-input" type="checkbox" formControlName="termsCheckbox" id="agree-terms-checkbox">
+            <label class="form-check-label" for="agree-terms-checkbox">
+              {{ 'signup.data.form.termsAndConditionsAndPrivacy.label1' | translate }}
+              <a class="conditions" (click)="$event.preventDefault(); navigateToTermsAndConditions();">
+                {{ 'signup.data.form.termsAndConditions.label' | translate }}</a>
+              {{ 'signup.data.form.termsAndConditionsAndPrivacy.label2' | translate }}
+              <a class="conditions" (click)="$event.preventDefault(); navigateToPrivacyConditions();">
+                {{ 'signup.data.form.privacyConditions.label' | translate }}</a>
+            </label>
+            <ngx-form-error [control]="signUpForm.get('termsCheckbox')"></ngx-form-error>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <button id="submit" class="btn btn-primary" [disabled]="disable" (click)="submitUserData()">
+        {{'signup.data.submit.button' | translate}}
+      </button>
+      <button id="cancel" class="btn btn-outline-secondary float-right" [disabled]="disable" type="button" (click)="cancelSignUp()">
+        {{'signup.data.cancel.button' | translate}}
+      </button>
+    </form>
+  </div>
+</div>

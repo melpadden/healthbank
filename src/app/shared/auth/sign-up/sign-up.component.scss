@@ -1,0 +1,22 @@
+@import '../../../../variables';
+@import '~bootstrap/scss/bootstrap';
+
+
+.logo-size {
+  height: 4.1rem;
+}
+
+@media all and (max-width: 400px) {
+
+  .card {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+}
+
+.conditions {
+  color: #0645AD !important;
+  text-decoration: underline !important;
+}

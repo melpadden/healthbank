@@ -1,0 +1,54 @@
+<app-list-chrome #list
+                 [list]="loadedItems$ | async"
+                 (loadMore)="loadMore($event)"
+                 [loadMoreToken]="showMoreToken"
+                 [searchCollapsed]="searchCollapsed">
+
+  <ul class="timeline-list">
+    <li *ngFor="let item of list.slicedList" class="timeline-list-item pointer" (click)="itemClicked(item)"
+        role="button"
+        [ngClass]="{ pointer: !item.markedForDeletion }">
+
+      <div class="d-flex align-items-center timeline-list-item-title-wrapper mb-md-0">
+        <div class="profile-icon">
+          {{item.signature | async}}
+        </div>
+        <span class="timeline-list-item-title">{{item.metadata.title}}</span>
+      </div>
+      <app-download-content [timeLineItem]="item" class="timeline-list-item-download-content text-truncate "></app-download-content>
+      <div class="mb-2 timeline-list-item-tags max-width-100" *ngIf="item.metadata && item.metadata.tags">
+        <span *ngFor="let tag of item.metadata.tags" class="max-width-100">
+          <div class="badge badge-light mr-1 mt-1 text-truncate">{{tag}}</div>
+        </span>
+      </div>
+      <div class="timeline-list-item-date" [ngClass]="{'tags-visible':item.metadata && item.metadata.tags}">
+        <span class="text-muted"> {{item.time | dateTimeFormat }} </span>
+      </div>
+      <div *ngIf="authService.isOwner(item)" class="timeline-list-item-shared-state">
+      <span [ngClass]="{'tags-visible':item.metadata && item.metadata.tags}">
+          <svg class="ma-icon-visibility" aria-hidden="true" height="20px">
+          <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-visibility"></use>
+        </svg>
+          <span class="text-muted">{{getSharedUsersCount(item) > 0 ? ('listTimelinePage.sharedWith' | translate) : 'listTimelinePage.sharedWith.private' | translate}}</span>
+          <a appShareItem [item]="item" (click)="$event.stopPropagation();">{{getSharedUsersCount(item) > 0 ?
+            ('listTimelinePage.people' | translate : {count: getSharedUsersCount(item)}) : 'listTimelinePage.share.private' | translate }}</a>
+      </span>
+      </div>
+      <div class="timeline-list-item-image">
+        <div class="">
+          <app-preview-content [timeLineItem]="item"></app-preview-content>
+        </div>
+      </div>
+      <div *ngIf="item.markedForDeletion" class="deletedOverlay" (click)="deletedItemClicked($event)">
+        <app-loading-spinner></app-loading-spinner>
+        <span class="deletionState">{{ 'listTimelinePage.deletionQueued' | translate }}</span>
+      </div>
+      <div *ngIf="hasUploadQueueState(item)" class="queuedOverlay" (click)="queuedItemClicked($event)">
+        <div>
+          <app-loading-spinner></app-loading-spinner>
+          <span class="queueState">{{getUploadQueueState(item)}}</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</app-list-chrome>

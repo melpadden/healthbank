@@ -1,0 +1,6 @@
+<app-sign-up-data *ngIf="!privateKey && (!sessionUser || !sessionUser.signUpState)" [(privateKey)]="privateKey"
+                  [(sessionUser)]="sessionUser"></app-sign-up-data>
+<app-sign-up-confirm-key *ngIf="privateKey && (!sessionUser || !sessionUser.signUpState)" [(privateKey)]="privateKey"
+                         [(sessionUser)]="sessionUser"></app-sign-up-confirm-key>
+<app-sign-up-confirm-mail *ngIf="sessionUser?.signUpState === UserSignUpState.CREATED"
+                          [sessionUser]="sessionUser"></app-sign-up-confirm-mail>

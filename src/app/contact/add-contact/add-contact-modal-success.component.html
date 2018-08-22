@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{'add-contact-modal-success.title' | translate}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <div class="row">
+
+    <div class="col-sm-12 col-md-2 d-inline align-self-center pb-sm-3 pb-md-0">
+      <div class="profile-icon">
+        {{contact.contactInfo.firstname?.slice(0,1).toUpperCase()}}{{contact.contactInfo.lastname?.slice(0,1).toUpperCase()}}
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-5 align-self-center d-inline text-truncate pb-sm-3 pb-md-0">
+      <span>{{contact.contactInfo.firstname}} {{contact.contactInfo.lastname}}</span> <br>
+      <span>{{contact.contactInfo.email}}</span>
+    </div>
+  </div>
+  <br>
+  <p>
+    {{'add-contact-modal-success.body.p1' | translate}}
+  </p>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary mr-auto" (click)="activeModal.close()">
+    {{'add-contact-modal-success.closeLabel' | translate}}
+  </button>
+</div>

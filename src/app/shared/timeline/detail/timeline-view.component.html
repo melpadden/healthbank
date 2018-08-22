@@ -1,0 +1,70 @@
+<div class="row form-group">
+  <label class="col-sm-12 col-md-2">
+    {{ 'timelineView.title' | translate }}
+  </label>
+  <div class="col-sm-12 col-md-8 text-truncate">
+    {{ item.metadata.title}}
+  </div>
+</div>
+<div class="row form-group">
+  <label class="col-sm-12 col-md-2">
+    {{ 'timelineView.file' | translate }}
+  </label>
+  <div class="col-sm-12 col-md-8">
+    <div class="pb-2">
+      <app-preview-content [timeLineItem]="item" [height]="'200px'"
+                           [width]="'300px'">
+      </app-preview-content>
+    </div>
+    <div>
+      <app-download-content [timeLineItem]="item"></app-download-content>
+    </div>
+  </div>
+</div>
+<div class="row form-group">
+  <label class="col-sm-12 col-md-2">
+    {{ 'timelineView.date' | translate }}
+  </label>
+  <div class="col-sm-12 col-md-8">
+    {{ item.time | dateTimeFormat }}
+  </div>
+</div>
+<div class="row form-group" *ngIf="item.metadata.tags">
+  <label class="col-sm-12 col-md-2">
+    {{ 'timelineView.tags' | translate }}
+  </label>
+  <div class="col-sm-12 col-md-8">
+          <span *ngFor="let tag of item.metadata.tags">
+            <div class="badge badge-light mr-1 text-truncate">{{tag}}</div>
+          </span>
+  </div>
+</div>
+<div class="row form-group">
+  <label class="col-sm-12 col-md-2">
+    {{ 'timelineView.addedBy' | translate }}
+  </label>
+  <div class="col-sm-12 col-md-8">
+    {{ addedBy }} {{ item.uploadTime | dateTimeFormat }}
+  </div>
+</div>
+<div class="row form-group" *ngIf="authService.isOwner(item)">
+  <label class="col-sm-12 col-md-2">
+    {{ 'timelineView.sharing' | translate }}
+  </label>
+  <!-- FIXME: refs #205 remove 'hidden' when the share is possible. -->
+  <div class="col-sm-12 col-md-8">
+    <svg class="ma-icon-visibility" aria-hidden="true" height="20px">
+      <use attr.xlink:href="{{assets}}/images/symbol-defs.svg#ma-icon-visibility"></use>
+    </svg>
+      <span class="text-muted">{{ getSharedUsersCount() > 0 ? ('timelineView.sharedWith' | translate) : 'timelineView.sharedWith.private' | translate}}</span>
+      <a appShareItem [item]="item" [sharedContacts]="sharedContacts">{{getSharedUsersCount() > 0 ?
+        ('timelineView.people' | translate : {count: getSharedUsersCount()}) : 'timelineView.share.private' | translate}}</a>
+
+  </div>
+  <div class="col-sm-12 col-md-8 offset-md-2 d-flex ">
+    <div *ngFor="let shared of sharedContacts | async" class="mr-1">
+      <a (click)="goToContact(shared)">{{shared.contactInfo.firstname}} {{shared.contactInfo.lastname}}</a>
+    </div>
+
+  </div>
+</div>

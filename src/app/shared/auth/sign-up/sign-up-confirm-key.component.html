@@ -1,0 +1,43 @@
+<div class="centered-box">
+  <img class="rounded mx-auto d-block logo-size"
+       src="{{assets}}/images/healthbank-logo.png">
+  <div class="card mt-4 p-3">
+
+    <div>
+      <h3 class="text-center pt-2">{{'signup.confirmKey.title' | translate }}</h3>
+      <p>
+        {{'signup.confirmKey.p1.l1' | translate }}<br>
+        {{'signup.confirmKey.p1.l2' | translate }}
+      </p>
+      <p>
+        <strong>
+          <i>{{'signup.confirmKey.p2.l1' | translate }}</i>
+          {{'signup.confirmKey.p2.l2' | translate }}
+          <span class="text-danger">
+            {{'signup.confirmKey.p2.l3' | translate }}
+          </span>
+          {{'signup.confirmKey.p2.l4' | translate }}
+        </strong>
+        {{'signup.confirmKey.p2.l5' | translate }}
+      </p>
+      <div class="form-group">
+        <textarea id="privateKeyId" readonly class="w-100 textarea" rows="10">{{privateKey}}</textarea>
+      </div>
+    </div>
+  </div>
+  <div class="container clearfix">
+    <div class="float-left mt-3">
+      <div class="form-check form-group">
+        <input class="form-check-input" type="checkbox" value="{{stored}}" (click)="toggleStored()" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          {{'signup.confirmKey.check.label' | translate }}
+        </label>
+      </div>
+      <div class="form-group float-left">
+        <button id="acceptPrivateKey" class="btn btn-primary" (click)="confirmPrivateKey()" [disabled]="!stored">
+          {{'signup.confirmKey.submit.label' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

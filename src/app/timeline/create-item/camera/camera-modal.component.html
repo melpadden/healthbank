@@ -1,0 +1,45 @@
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title">{{ 'camera.modal.title.label' | translate }}</h4>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="cameras" class="form-group row">
+      <label class="col-2 col-form-label">
+        {{ 'camera.modal.select.label' | translate }}
+      </label>
+      <div class="col-lg-7 col-md-10">
+        <div class="select-wrapper">
+          <select id="camera-drop-input"
+                  class="form-control"
+                  [(ngModel)]="selectedCamera"
+                  [disabled]="cameras.length && cameras.length < 2">
+            <option *ngFor="let camera of cameras" [ngValue]="camera">
+              {{ camera.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!cameraErrorMessage">
+      <ack-webcam
+        [videoDeviceId]="selectedCameraId()"
+        [(ref)]="webcam"
+        (success)="cameraSuccess($event)"
+        (catch)="cameraError($event)">
+      </ack-webcam>
+    </div>
+    <span class="camera-error" *ngIf="!cameraInit">
+      {{ cameraErrorMessage }}
+    </span>
+  </div>
+  <div class="modal-footer justify-content-between">
+    <button id="camera-add-picture" type="button" class="btn btn-primary pull-right"
+            (click)="addPicture()"
+            [disabled]="!cameraInit">
+      {{ 'camera.modal.add.picture.label' | translate }}
+    </button>
+    <button id="camera-cancel" type="button" class="btn btn-secondary" (click)="closeCamera()">
+      {{ 'camera.modal.cancel.label' | translate }}
+    </button>
+  </div>
+</div>

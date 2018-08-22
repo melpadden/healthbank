@@ -1,0 +1,107 @@
+<div class="centered-box">
+  <img class="rounded mx-auto d-block logo-size"
+       src="{{assets}}/images/healthbank-logo.png">
+  <div class="card mt-4 p-3">
+    <form id="enterCodeForm" [formGroup]="activationForm" *ngIf="actualState === STATE.ENTER_CODE" novalidate
+          (keyup.enter)="activateAccount()">
+      <h3 class="text-center pt-2">{{'signup.confirmMail.enterCode.title' | translate}}</h3>
+      <p>
+        {{'signup.confirmMail.enterCode.p1.l1'| translate}} <strong>{{sessionUser?.user?.email}}</strong>.
+      </p>
+      <p>
+        {{'signup.confirmMail.enterCode.p2.l1'| translate}}
+      </p>
+      <div class="form-group">
+        <div class="">
+          <label class="">
+            <strong>{{'signup.confirmMail.enterCode.form.activationCode.label' | translate}}</strong>
+          </label>
+        </div>
+        <div class="">
+          <input id="code" formControlName="code" class="form-control" type="text" maxlength="8" minlength="8">
+          <ngx-form-error [control]="activationForm.get('code')"></ngx-form-error>
+        </div>
+      </div>
+      <p>
+        {{'signup.confirmMail.enterCode.p3.l1_1' | translate}}
+        <a [routerLink]="" (click)="cancelSignUp()"> {{'signup.confirmMail.enterCode.p3.l1_link' | translate}} </a>
+        {{'signup.confirmMail.enterCode.p3.l1_2' | translate}}.
+      </p>
+
+    </form>
+
+
+    <div id="userActivatedView" *ngIf="actualState === STATE.ACTIVATED">
+      <h3 class="text-center pt-2">{{'signup.confirmMail.activated.title' | translate}}</h3>
+      <p>
+        {{'signup.confirmMail.activated.p1.l1' | translate}}
+      </p>
+      <p>
+        {{'signup.confirmMail.activated.p2.l1' | translate}}
+      </p>
+    </div>
+
+    <form id="requestNewCodeView" [formGroup]="requestCodeForm" *ngIf="actualState === STATE.REQUEST_NEW_CODE"
+          novalidate
+          (keyup.enter)="requestNewCode()">
+      <h3 class="text-center pt-2">{{'signup.confirmMail.requestNewCode.title' | translate}}</h3>
+      <p>
+        {{'signup.confirmMail.requestNewCode.p1.l1' | translate}}
+        <br>
+        {{'signup.confirmMail.requestNewCode.p1.l2' | translate}}
+      </p>
+
+      <div class="form-group">
+        <label class="">
+          <strong>{{'signup.confirmMail.requestNewCode.form.email.label' | translate}}</strong>
+        </label>
+        <div class="">
+          <input id="email" formControlName="email" class="form-control" type="text" maxlength="128">
+          <ngx-form-error [control]="requestCodeForm.get('email')"></ngx-form-error>
+        </div>
+      </div>
+
+    </form>
+
+    <div id="codeRequestedView" *ngIf="actualState === STATE.CODE_REQUESTED">
+      <h3 class="text-center pt-2">{{'signup.confirmMail.codeRequest.title' | translate}}</h3>
+      <p>
+        {{'signup.confirmMail.codeRequest.p1.l1' | translate}}<strong>{{sessionUser?.user?.email}}</strong>.
+      </p>
+      <p>
+        {{'signup.confirmMail.codeRequest.p2.l1' | translate}}<a [routerLink]="" (click)="proceedToActivate()">
+        {{'signup.confirmMail.codeRequest.p2.link' | translate}}</a>.
+      </p>
+    </div>
+
+
+  </div>
+  <div class="mt-3 row m-0" *ngIf="actualState === STATE.ENTER_CODE">
+    <div class="form-group col-sm-6">
+      <button id="completeSignUp" class="btn btn-primary" (click)="activateAccount()" [disabled]="disable">
+        {{'signup.confirmMail.enterCode.completeSignUp.button' | translate}}
+      </button>
+    </div>
+    <div class="form-group col-sm-6">
+      <button id="initiateNewCodeRequest" class="btn btn-outline-secondary"
+              (click)="initiateNewCodeRequest()"
+      >
+        {{'signup.confirmMail.enterCode.initiateNewCodeRequest.button' | translate}}
+      </button>
+    </div>
+  </div>
+  <div class="mt-3" *ngIf="actualState === STATE.ACTIVATED">
+    <div class="form-group">
+      <button id="continueToApp" class="btn btn-primary" (click)="continueToApp()">
+        {{'signup.confirmMail.activated.continue.button' | translate}}
+      </button>
+    </div>
+  </div>
+  <div class="mt-3" *ngIf="actualState === STATE.REQUEST_NEW_CODE">
+    <div class="form-group">
+      <button id="requestCode" class="btn btn-primary" (click)="requestNewCode()" [disabled]="disable">
+        {{'signup.confirmMail.requestNewCode.requestCode.button' | translate}}
+      </button>
+    </div>
+  </div>
+</div>
