@@ -90,7 +90,7 @@
     "karma-mocha-reporter": "^2.2.3",
     "karma-phantomjs-launcher": "^1.0.2",
     "mkdirp": "^0.5.1",
-    "node-sass": "4.5.3",
+    "node-sass": "4.13.1",
     "protractor": "~5.1.2",
     "protractor-helpers": "^1.1.0",
     "protractor-jasmine2-screenshot-reporter": "^0.4.1",
